@@ -3,11 +3,11 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - cd client && yarn && cd ..
-      - cd server && yarn && cd ..
+      - cd client && npm install && cd ..
+      - cd server && npm install && cd ..
   build:
     commands:
-      - cd client && yarn run build && cd ..
+      - cd client && npm run build && cd ..
   post_build:
     commands:
       - mv ./client/build ./build
