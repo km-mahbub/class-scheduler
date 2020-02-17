@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - cd client && yarn && cd ..
+      - cd server && yarn && cd ..
+  build:
+    commands:
+      - cd client && yarn run build && cd ..
+  post_build:
+    commands:
+      - mv ./client/build ./build
+artifacts:
+  secondary-artifacts:
+    client:
+      files:
+        - '**/*'
+      base-directory: build
+    server:
+      files:
+        - '**/*'
+      base-directory: server
