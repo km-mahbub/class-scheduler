@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import { JsonDump, TaskView, PriorityView } from './components';
 
-function App() {
+const App = () => {
   const [message, setMessage] = useState("");
   const [hasError, setErrors] = useState(false);
 
@@ -22,6 +23,9 @@ function App() {
       <h1>Class Scheduler</h1>
       <p>Our website is under construction.</p>
       {hasError ? null : <div>{message}</div>}
+      <JsonDump />
+      <TaskView />
+      <PriorityView />
     </div>
   );
 }
