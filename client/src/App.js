@@ -7,7 +7,7 @@ const App = () => {
   const [hasError, setErrors] = useState(false);
 
   const fetchData = async () => {
-    const res = await fetch("https://api.classscheduler.tk");
+    const res = await fetch("https://api.classscheduler.tk/v1/health-check");
     res
       .json()
       .then(res => setMessage(res.message))

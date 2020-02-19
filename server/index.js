@@ -1,17 +1,14 @@
-require('dotenv').config()
-const express = require('express')
-const cors = require('cors')
+// config should be imported before importing any other file
+const config = require('./config/config');
+const app = require('./config/express');
+require('./config/mongoose');
 
-const app = express()
-const port = process.env.PORT || 3000
+// module.parent check is required to support mocha watch
+// src: https://github.com/mochajs/mocha/issues/1912
+if (!module.parent) {
+  app.listen(config.port, () => {
+    console.info(`server started on port ${config.port} (${config.env})`);
+  });
+}
 
-app.use(express.json())
-app.use(cors())
-
-app.get('/', (req, res) => {
-  res.json({ message: 'Hello sensei!' })
-})
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}!`)
-})
+module.exports = app;
