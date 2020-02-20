@@ -1,0 +1,20 @@
+{
+  "signin": {
+    "title": "サインイン",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "rememberMe": "覚えてます",
+    "forgotPassword": "パスワードをお忘れですか？",
+    "signupLink": "アカウントを持っていないのですか？ サインアップ"
+  },
+  "signup": {
+    "title": "サインアップ",
+    "firstName": "名",
+    "lastName": "姓",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "retypePassword": "パスワードを認証",
+    "emailSubscription": "インスピレーション、マーケティングプロモーション、更新情報をメールで受け取りたい。",
+    "signinLink": "すでにアカウントをお持ちですか？ サインイン"
+  }
+}
