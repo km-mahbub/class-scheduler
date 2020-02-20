@@ -37,8 +37,8 @@ app.use(passport.initialize());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// API router [need to check]
-app.use('/v1/', routes);
+// API router
+app.use('/v1', routes);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
