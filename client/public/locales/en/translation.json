@@ -1,0 +1,20 @@
+{
+  "signin": {
+    "title": "Sign in",
+    "email": "Email Address",
+    "password": "Password",
+    "rememberMe": "Remember Me",
+    "forgotPassword": "Forgot password?",
+    "signupLink": "Don't have an account? Sign up"
+  },
+  "signup": {
+    "title": "Sign up",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email Address",
+    "password": "Password",
+    "retypePassword": "Retype Password",
+    "emailSubscription": "I want to receive inspiration, marketing promotions and updates via email.",
+    "signinLink": "Already have an account? Sign in"
+  }
+}

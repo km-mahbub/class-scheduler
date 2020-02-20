@@ -1,32 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import { JsonDump, TaskView, PriorityView } from './components';
+import React from 'react';
+// import Typography from '@material-ui/core/Typography';
+// import Link from '@material-ui/core/Link';
+import { SignIn } from './components';
+
+// function Copyright() {
+//   return (
+//     <Typography variant="body2" color="textSecondary" align="center">
+//       {'Copyright © '}
+//       <Link color="inherit" href="https://material-ui.com/">
+//         Your Website
+//       </Link>{' '}
+//       {new Date().getFullYear()}
+//       {'.'}
+//     </Typography>
+//   );
+// }
 
 const App = () => {
-  const [message, setMessage] = useState("");
-  const [hasError, setErrors] = useState(false);
-
-  const fetchData = async () => {
-    const res = await fetch("https://api.classscheduler.tk/v1/health-check");
-    res
-      .json()
-      .then(res => setMessage(res.message))
-      .catch(err => setErrors(err));
-  }
-
-  useEffect(() => {
-    fetchData()
-  }, []);
-
   return (
-    <div className="App">
-      <h1>Class Scheduler</h1>
-      <p>Our website is under construction.</p>
-      {hasError ? null : <div>{message}</div>}
-      <JsonDump />
-      <TaskView />
-      <PriorityView />
-    </div>
+    <SignIn />
   );
 }
 
