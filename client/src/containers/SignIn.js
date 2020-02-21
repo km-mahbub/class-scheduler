@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
-
+import { useStateLink } from '@hookstate/core';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,42 +14,83 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Copyright from './Copyright';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    height: '100vh',
-  },
-  image: {
-    backgroundImage: 'url(https://source.unsplash.com/random)',
-    backgroundRepeat: 'no-repeat',
-    backgroundColor:
-      theme.palette.type === 'dark' ? theme.palette.grey[900] : theme.palette.grey[50],
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  },
-  paper: {
-    margin: theme.spacing(8, 4),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+import { Footer } from '../components';
+import stateLink from '../store';
+import { useForm } from '../hooks';
+import { SigninStyles as useStyles } from '../styles';
 
-const SignInSide = ({ t, i18n }) => {
+
+const SignInSide = (props) => {
+  const { t } = props;
+
   const classes = useStyles();
+  const store = useStateLink(stateLink);
+
+  // Define your state schema
+  const stateSchema = {
+    email: { value: '', error: '' },
+    password: { value: '', error: '' }
+  };
+
+  // const delay = () => new Promise(resolve => setTimeout(resolve, 3000));
+
+  // Create your own validationStateSchema
+  // stateSchema property should be the same in validationStateSchema
+  // in-order a validation to works in your input.
+  const stateValidatorSchema = {
+    email: {
+      required: true,
+      validator: {
+        func: value => /\S+@\S+\.\S+/.test(value),
+        error: 'formError.email',
+      },
+    },
+    password: {
+      required: true,
+      validator: {
+        func: value => /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/.test(value),
+        error: 'formError.password',
+      },
+    }
+  };
+
+  const onSubmitForm = (state) => {
+    store.nested.loader.set(true);
+    setTimeout(() => {
+      props.history.push('/signup');
+    }, 1000);
+  }
+
+  const {
+    values,
+    errors,
+    dirty,
+    handleOnChange,
+    handleOnBlur,
+    handleOnSubmit,
+    // setFieldError,
+    // setFieldValue,
+    // setStateSchema,
+    disable,
+  } = useForm(stateSchema, stateValidatorSchema, onSubmitForm);
+
+  // useEffect(() => {
+  //   delay().then(() => {
+  //     setStateSchema({
+  //       first_name: { value: 'Ellie', error: '' },
+  //       last_name: { value: 'Eilish', error: '' },
+  //       tags: { value: '', error: '' },
+  //     });
+  //     // setFieldValue({ name: 'first_name', value: 'Hello' });
+  //     // setFieldError({ name: 'first_name', error: 'Vince' });
+  //   });
+  // }, []);
+
+  const { email, password } = values;
+
+  const passwordError = errors.password && dirty.password;
+  const emailError = errors.email && dirty.email;
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -63,8 +104,13 @@ const SignInSide = ({ t, i18n }) => {
           <Typography component="h1" variant="h5">
             {t('signin.title')}
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} onSubmit={handleOnSubmit} noValidate>
             <TextField
+              error={emailError}
+              helperText={emailError && t(errors.email)}
+              value={email}
+              onChange={handleOnChange}
+              onBlur={handleOnBlur}
               variant="outlined"
               margin="normal"
               required
@@ -72,10 +118,14 @@ const SignInSide = ({ t, i18n }) => {
               id="email"
               label={t('signin.email')}
               name="email"
-              autoComplete="email"
-              autoFocus
+              autoComplete="email"      
             />
             <TextField
+              error={passwordError}
+              helperText={passwordError && t(errors.password)}
+              value={password}
+              onChange={handleOnChange}
+              onBlur={handleOnBlur}
               variant="outlined"
               margin="normal"
               required
@@ -96,6 +146,7 @@ const SignInSide = ({ t, i18n }) => {
               variant="contained"
               color="primary"
               className={classes.submit}
+              disabled={disable}
             >
               {t('signin.title')}
             </Button>
@@ -112,7 +163,7 @@ const SignInSide = ({ t, i18n }) => {
               </Grid>
             </Grid>
             <Box mt={5}>
-              <Copyright />
+              <Footer />
             </Box>
           </form>
         </div>

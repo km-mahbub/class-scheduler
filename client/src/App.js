@@ -1,24 +1,26 @@
 import React from 'react';
-// import Typography from '@material-ui/core/Typography';
-// import Link from '@material-ui/core/Link';
-import { SignIn } from './components';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
-// function Copyright() {
-//   return (
-//     <Typography variant="body2" color="textSecondary" align="center">
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://material-ui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
+import { Layout, Loader } from './components';
+import { SignIn, SignUp, Home, NotFound } from './containers';
 
 const App = () => {
   return (
-    <SignIn />
+    <React.Fragment>
+      <Loader />
+      <Switch>
+        <Route exact path="/" component={SignIn} />
+        <Route path="/signin" component={SignIn} />
+        <Layout>
+          <Switch>
+            <Route path="/signup" component={SignUp} />
+            <Route path="/student" component={Home} />
+            <Route path="/404" component={NotFound} />
+            <Redirect to="/404" />
+          </Switch>
+        </Layout>
+      </Switch>
+    </React.Fragment>
   );
 }
 

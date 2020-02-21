@@ -16,5 +16,10 @@
     "retypePassword": "Retype Password",
     "emailSubscription": "I want to receive inspiration, marketing promotions and updates via email.",
     "signinLink": "Already have an account? Sign in"
+  },
+  "formError": {
+    "required": "This is required field.",
+    "password": "Invalid password, minimum length: 6, including at least one uppercase letter and at least one number.",
+    "email": "Invalid email format."
   }
 }

@@ -4,8 +4,8 @@
     "email": "メールアドレス",
     "password": "パスワード",
     "rememberMe": "覚えてます",
-    "forgotPassword": "パスワードをお忘れですか？",
-    "signupLink": "アカウントを持っていないのですか？ サインアップ"
+    "forgotPassword": "パスワードをお忘れた？",
+    "signupLink": "アカウントを持っていない？ サインアップ"
   },
   "signup": {
     "title": "サインアップ",
@@ -16,5 +16,10 @@
     "retypePassword": "パスワードを認証",
     "emailSubscription": "インスピレーション、マーケティングプロモーション、更新情報をメールで受け取りたい。",
     "signinLink": "すでにアカウントをお持ちですか？ サインイン"
+  },
+  "formError": {
+    "required": "これは必須フィールドです。",
+    "password": "無効なパスワード、最小長：6、少なくとも1つの大文字と少なくとも1つの数字を含む。",
+    "email": "メール形式が無効です。"
   }
 }
