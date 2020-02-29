@@ -27,7 +27,7 @@ const SignInSide = (props) => {
   const classes = useStyles();
   const store = useStateLink(stateLink);
 
-  // Define your state schema
+  // Defining state schema
   const stateSchema = {
     email: { value: '', error: '' },
     password: { value: '', error: '' }
@@ -35,9 +35,8 @@ const SignInSide = (props) => {
 
   // const delay = () => new Promise(resolve => setTimeout(resolve, 3000));
 
-  // Create your own validationStateSchema
   // stateSchema property should be the same in validationStateSchema
-  // in-order a validation to works in your input.
+  // in-order a validation to works in input.
   const stateValidatorSchema = {
     email: {
       required: true,
