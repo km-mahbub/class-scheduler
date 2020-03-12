@@ -55,10 +55,10 @@ const SignInSide = (props) => {
   };
 
   const onSubmitForm = (state) => {
-    store.nested.loader.set(true);
-    setTimeout(() => {
-      props.history.push('/signup');
-    }, 1000);
+    props.onAuth(
+      stateSchema.email.value,
+      stateSchema.password.value
+    );
   }
 
   const {
@@ -171,4 +171,24 @@ const SignInSide = (props) => {
   );
 }
 
-export default withTranslation()(SignInSide);
+const mapStateToProps = state => {
+  return {
+    loading: state.authReducer.loading,
+    error: state.authReducer.error,
+    authRedirectPath: state.authReducer.authRedirect,
+    isAuthenticated: state.authReducer.token !== null
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onAuth: (email, password) =>
+      dispatch(actions.auth(email, password)),
+    onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath("/"))
+  };
+};
+
+export default withTranslation()(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignInSide));

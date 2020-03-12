@@ -39,33 +39,27 @@ export const checkAuthTimeout = expirationTime => {
   };
 };
 
-export const auth = (email, password, isSignUp) => {
+export const auth = (email, password) => {
   return dispatch => {
     dispatch(authStart());
     const authData = {
       email: email,
-      password: password,
-      returnSecureToken: true
+      password: password
     };
 
-    let url =
-      (isSignUp
-        ? "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key="
-        : "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=") +
+    let url = "https://api.classscheduler.tk/v1/auth/login" +
       axios
         .post(url, authData)
         .then(response => {
-          const expirationDate = new Date(
-            new Date().getTime() + response.data.expiresIn * 1000
-          );
-          localStorage.setItem("token", response.data.idToken);
+          var expirationDate = new Date();
+          expirationDate.setHours(expirationDate.getHours() + 4);
+          localStorage.setItem("token", response.token);
           localStorage.setItem("expirationDate", expirationDate);
-          localStorage.setItem("userId", response.data.localId);
-          dispatch(authSuccess(response.data.idToken, response.data.localId));
-          dispatch(checkAuthTimeout(response.data.expiresIn));
+          localStorage.setItem("userId", response.user._id);
+          dispatch(authSuccess(response.token, response.user._id));
         })
         .catch(error => {
-          dispatch(authFail(error.response.data.error));
+          dispatch(authFail("Unauthorized"));
         });
   };
 };
