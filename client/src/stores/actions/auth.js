@@ -52,7 +52,7 @@ export const auth = (email, password) => {
       .post(url, authData)
       .then(response => {
         var expirationDate = new Date();
-        expirationDate.setMinutes(expirationDate.getMinutes() + 2);
+        expirationDate.setHours(expirationDate.getHours() + 4);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("expirationDate", expirationDate);
         localStorage.setItem("userId", response.data.user._id);
