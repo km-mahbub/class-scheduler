@@ -16,7 +16,7 @@ const Loader = (props) => {
   const classes = useStyles();
 
   return (
-    <Backdrop className={classes.backdrop} open={props.loading}>
+    <Backdrop className={classes.backdrop} open={props.loading || false}>
       {/* <CircularProgress color="secondary" /> */}
       <div className="lds-facebook"><div></div><div></div><div></div></div>
     </Backdrop>);

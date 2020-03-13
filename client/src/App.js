@@ -1,13 +1,32 @@
-import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { connect } from "react-redux";
 
 import { Layout, Loader } from './components';
 import { SignIn, SignUp, Home, NotFound } from './containers';
+import * as actions from "./stores/actions/index";
 
-const App = () => {
-  return (
-    <React.Fragment>
-      <Loader />
+const App = (props) => {
+  useEffect(() => {
+    props.tryAutoSignUp();
+  }, []);
+
+  useEffect(() => {
+    if (props.isAuthenticated) {
+      props.history.push(props.authRedirectPath);
+    }
+  }, [props.isAuthenticated]);
+
+  let routes = (
+    <Switch>
+      <Route exact path="/" component={SignIn} />
+      <Route path="/signin" component={SignIn} />
+      <Redirect to="/" />
+    </Switch>
+  );
+
+  if (props.isAuthenticated) {
+    routes = (
       <Switch>
         <Route exact path="/" component={SignIn} />
         <Route path="/signin" component={SignIn} />
@@ -20,8 +39,33 @@ const App = () => {
           </Switch>
         </Layout>
       </Switch>
+    );
+  }
+
+  return (
+    <React.Fragment>
+      <Loader />
+      {routes}
     </React.Fragment>
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    authRedirectPath: state.authReducer.authRedirect,
+    isAuthenticated: state.authReducer.token !== null
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    tryAutoSignUp: () => dispatch(actions.checkAuthStatus())
+  };
+};
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(App)
+);

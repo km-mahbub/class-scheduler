@@ -4,8 +4,8 @@ const initState = {
   token: null,
   userId: null,
   error: null,
-  loading: null,
-  authRedirect: "/"
+  loading: false,
+  authRedirect: "/student"
 };
 
 const authReducer = (state = initState, action) => {

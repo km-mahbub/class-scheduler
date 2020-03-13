@@ -50,7 +50,6 @@ function Copyright(props) {
         >
           <option value='en'>English</option>
           <option value='jp'>Japanese</option>
-          <option value='de'>German</option>
         </Select>
       </FormControl>
     </div>

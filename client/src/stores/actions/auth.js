@@ -35,7 +35,7 @@ export const checkAuthTimeout = expirationTime => {
   return dispatch => {
     setTimeout(() => {
       dispatch(authLogout());
-    }, expirationTime * 100);
+    }, expirationTime * 1000);
   };
 };
 
@@ -47,20 +47,21 @@ export const auth = (email, password) => {
       password: password
     };
 
-    let url = "https://api.classscheduler.tk/v1/auth/login" +
-      axios
-        .post(url, authData)
-        .then(response => {
-          var expirationDate = new Date();
-          expirationDate.setHours(expirationDate.getHours() + 4);
-          localStorage.setItem("token", response.token);
-          localStorage.setItem("expirationDate", expirationDate);
-          localStorage.setItem("userId", response.user._id);
-          dispatch(authSuccess(response.token, response.user._id));
-        })
-        .catch(error => {
-          dispatch(authFail("Unauthorized"));
-        });
+    let url = "https://api.classscheduler.tk/v1/auth/login";
+    axios
+      .post(url, authData)
+      .then(response => {
+        var expirationDate = new Date();
+        expirationDate.setMinutes(expirationDate.getMinutes() + 2);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("expirationDate", expirationDate);
+        localStorage.setItem("userId", response.data.user._id);
+        dispatch(authSuccess(response.data.token, response.data.user._id));
+        dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
+      })
+      .catch(error => {
+        dispatch(authFail("Unauthorized"));
+      });
   };
 };
 

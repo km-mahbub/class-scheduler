@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
-import { useStateLink } from '@hookstate/core';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -15,19 +14,11 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
 import { SignupStyles as useStyles } from '../styles';
-import stateLink from '../store';
 
 const SignUp = (props) => {
   const {t} = props;
 
   const classes = useStyles();
-  const store = useStateLink(stateLink);
-
-  useEffect(() => {
-    store.nested.loader.set(false);
-    
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <Container component="main" maxWidth="xs">

@@ -85,7 +85,6 @@ function useForm(
           error = validateFieldByCallback['error'];
         }
       }
-
       return error;
     },
     [stateValidatorSchema, values]
