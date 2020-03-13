@@ -1,25 +1,71 @@
-import React from 'react';
-// import Typography from '@material-ui/core/Typography';
-// import Link from '@material-ui/core/Link';
-import { SignIn } from './components';
+import React, { useEffect } from 'react';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { connect } from "react-redux";
 
-// function Copyright() {
-//   return (
-//     <Typography variant="body2" color="textSecondary" align="center">
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://material-ui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
+import { Layout, Loader } from './components';
+import { SignIn, SignUp, Home, NotFound } from './containers';
+import * as actions from "./stores/actions/index";
 
-const App = () => {
+const App = (props) => {
+  useEffect(() => {
+    props.tryAutoSignUp();
+  }, []);
+
+  useEffect(() => {
+    if (props.isAuthenticated) {
+      props.history.push(props.authRedirectPath);
+    }
+  }, [props.isAuthenticated]);
+
+  let routes = (
+    <Switch>
+      <Route exact path="/" component={SignIn} />
+      <Route path="/signin" component={SignIn} />
+      <Redirect to="/" />
+    </Switch>
+  );
+
+  if (props.isAuthenticated) {
+    routes = (
+      <Switch>
+        <Route exact path="/" component={SignIn} />
+        <Route path="/signin" component={SignIn} />
+        <Layout>
+          <Switch>
+            <Route path="/signup" component={SignUp} />
+            <Route path="/student" component={Home} />
+            <Route path="/404" component={NotFound} />
+            <Redirect to="/404" />
+          </Switch>
+        </Layout>
+      </Switch>
+    );
+  }
+
   return (
-    <SignIn />
+    <React.Fragment>
+      <Loader />
+      {routes}
+    </React.Fragment>
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    authRedirectPath: state.authReducer.authRedirect,
+    isAuthenticated: state.authReducer.token !== null
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    tryAutoSignUp: () => dispatch(actions.checkAuthStatus())
+  };
+};
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(App)
+);
