@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { withTranslation } from 'react-i18next';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -24,6 +24,11 @@ const useStyles = makeStyles(theme => ({
 function Copyright(props) {
   const classes = useStyles();
   const [language, setLanguage] = React.useState(props.i18n.language);
+
+  useLayoutEffect(()=> {
+    let newState = localStorage.getItem('i18nextLng') || 'en';
+    setLanguage(newState);
+  },[]);
 
   const handleChange = event => {
     props.i18n.changeLanguage(event.target.value);
