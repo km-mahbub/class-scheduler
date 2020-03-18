@@ -39,6 +39,16 @@ const authReducer = (state = initState, action) => {
         error: null,
         loading: null
       };
+    case actionTypes.START_LOADER:
+      return {
+        ...state,
+        loading: true
+      };
+    case actionTypes.STOP_LOADER:
+      return {
+        ...state,
+        loading: false
+      };
     case actionTypes.SET_AUTH_REDIRECT:
       return {
         ...state,

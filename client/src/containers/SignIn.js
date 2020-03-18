@@ -31,6 +31,8 @@ const SignInSide = (props) => {
     if (props.authRedirectPath !== "/") {
       props.onSetAuthRedirectPath();
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Defining state schema

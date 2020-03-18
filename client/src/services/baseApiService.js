@@ -5,7 +5,8 @@ const apiMethod = {
   DELETE: "DELETE"
 };
 
-const baseUrl = "https://api.classscheduler.tk/v1";
+// const baseUrl = "https://api.classscheduler.tk/v1";
+const baseUrl = "http://localhost:4040/v1";
 
 export default class BaseApiService {
   constructor(submittedBaseUrl = null) {
@@ -14,14 +15,9 @@ export default class BaseApiService {
   _prepareSettings(methodName) {
     let settings = {
       method: methodName,
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "same-origin",
       headers: {
         "Content-Type": "application/json; charset=utf-8"
-      },
-      redirect: "follow",
-      referrer: "no-referrer"
+      }
     };
     return settings;
   }
@@ -44,7 +40,7 @@ export default class BaseApiService {
     let url = this._prepareUrl(actionName, params);
     let settings = this._prepareSettings(apiMethod.GET);
     let response = await fetch(url, settings);
-    return response;
+    return await response.json();
   }
 
   async postData(actionName, params, postData) {

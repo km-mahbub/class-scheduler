@@ -2,19 +2,23 @@ import React, { useEffect } from 'react';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 
-import { Layout, Loader } from './components';
+import { Layout, Loader, Modal } from './components';
 import { SignIn, SignUp, Home, NotFound } from './containers';
 import * as actions from "./stores/actions/index";
 
 const App = (props) => {
   useEffect(() => {
     props.tryAutoSignUp();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (props.isAuthenticated) {
       props.history.push(props.authRedirectPath);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.isAuthenticated]);
 
   let routes = (
@@ -45,6 +49,7 @@ const App = (props) => {
   return (
     <React.Fragment>
       <Loader />
+      <Modal />
       {routes}
     </React.Fragment>
   );

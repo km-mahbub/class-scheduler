@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
 import clsx from 'clsx';
 
@@ -7,13 +7,26 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Skeleton from '@material-ui/lab/Skeleton';
+import { connect } from "react-redux";
 
-import { NavBar, NavDrawer, Calendar } from '../../components';
+import { NavBar, NavDrawer, EventCalendar } from '../../components';
 import { HomeStyles as useStyles } from '../../styles';
+import * as actions from "../../stores/actions/index";
 
 const Home = (props) => {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+  const { fetchEvents } = props;
+
+  useEffect(() => {
+    fetchEvents();
+  }, [fetchEvents]);
+
+  const handleDateSelection = (selectionInfo) => {
+    //window.alert(selectionInfo.start);
+    props.openModal();
+  }
 
   return (
     <div className={classes.root}>
@@ -37,7 +50,7 @@ const Home = (props) => {
             <Grid item xs={12}>
               <Paper className={classes.paper}>
                 {/* <Skeleton animation="wave" height={200} width="100%" style={{ marginBottom: 6 }} /> */}
-                <Calendar />
+                <EventCalendar eventsData={props.eventsData} handleSelect={handleDateSelection} />
               </Paper>
             </Grid>
           </Grid>
@@ -47,4 +60,20 @@ const Home = (props) => {
   );
 }
 
-export default withTranslation()(Home);
+const mapStateToProps = state => {
+  return {
+    eventsData: state.eventReducer.data
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    openModal: () => dispatch(actions.modalOpen()),
+    fetchEvents: () => dispatch(actions.fetchEvents())
+  };
+};
+
+export default withTranslation()(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home));

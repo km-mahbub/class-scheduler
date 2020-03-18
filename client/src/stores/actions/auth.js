@@ -1,6 +1,18 @@
 import * as actionTypes from "../actions/actionsTypes";
 import axios from "axios";
 
+export const loaderStart = () => {
+  return {
+    type: actionTypes.START_LOADER
+  };
+};
+
+export const loaderStop = () => {
+  return {
+    type: actionTypes.STOP_LOADER
+  };
+};
+
 export const authStart = () => {
   return {
     type: actionTypes.AUTH_START

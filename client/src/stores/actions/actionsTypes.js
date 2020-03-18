@@ -3,3 +3,11 @@ export const AUTH_START = "AUTH_START";
 export const AUTH_FAIL = "AUTH_FAIL";
 export const AUTH_LOGOUT = "AUTH_LOGOUT";
 export const SET_AUTH_REDIRECT = "SET_AUTH_REDIRECT";
+export const START_LOADER = "START_LOADER";
+export const STOP_LOADER = "STOP_LOADER";
+export const MODAL_OPEN = "MODAL_OPEN";
+export const MODAL_CLOSE = "MODAL_CLOSE";
+
+export const FETCH_EVENTS_SUCCESS = "FETCH_EVENTS_SUCCESS";
+export const FETCH_EVENTS_START = "FETCH_EVENTS_START";
+export const FETCH_EVENTS_FAIL = "FETCH_EVENTS_FAIL";
