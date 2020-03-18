@@ -16,6 +16,8 @@ import Button from '@material-ui/core/Button';
 import { drawerStore } from '../rxStores';
 import * as actionTypes from '../stores/actions';
 
+//import { NavBarStyles as customStyles } from '../styles';
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
