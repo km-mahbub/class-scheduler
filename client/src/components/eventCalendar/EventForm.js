@@ -6,19 +6,63 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import Grid from '@material-ui/core/Grid';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 const EventForm = (props) => {
   return (
     <React.Fragment>
       <DialogTitle id="form-dialog-title">Add Event</DialogTitle>
       <DialogContent>
-        <Autocomplete
-          id="combo-box-demo"
-          options={top100Films}
-          getOptionLabel={option => option.title}
-          style={{ width: 300 }}
-          renderInput={params => <TextField {...params} label="Select Class" variant="outlined" />}
-        />
+        <Grid>
+          <CssBaseline />
+          <Grid item xs={12} sm={12} md={12} elevation={6} square>
+            <Autocomplete
+              id="combo-box-demo"
+              options={top100Films}
+              getOptionLabel={option => option.title}
+              style={{ width: 300 }}
+              renderInput={params => <TextField {...params} margin="normal" label="Select Class" variant="outlined" />}
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={12} elevation={6} square>
+            <Autocomplete
+              id="combo-box-demo"
+              options={top100Films}
+              getOptionLabel={option => option.title}
+              style={{ width: 300 }}
+              renderInput={params => <TextField {...params} margin="normal" label="Select Teacher" variant="outlined" />}
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={12} elevation={6} square>
+            <Grid item xs={6} sm={6} md={6} elevation={6} square>
+              <TextField
+                id="datetime-local"
+                label="Next appointment"
+                type="datetime-local"
+                margin="normal"
+                variant="outlined"
+                defaultValue="2017-05-24T10:30"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </Grid>
+            <Grid item xs={6} sm={6} md={6} elevation={6} square>
+              <TextField
+                id="datetime-local"
+                label="Next appointment"
+                type="datetime-local"
+                margin="normal"
+                variant="outlined"
+                defaultValue="2017-05-24T10:30"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
       </DialogContent>
       <DialogActions>
         <Button onClick={props.closeModal} color="primary">
